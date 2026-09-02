@@ -361,7 +361,7 @@ var CONFIG = {
     mriDate: "Scheduled for the first week of practice",
     medicalGuidance: "",
     ptGuidance: "",
-    coachNotes: "",
+    coachNotes: "No deadlift — hurts his back, keep excluded permanently. He also listed serratus punches as something he enjoys; sometimes used in shoulder PT, but not added yet pending confirmation with his medical/PT team.",
     lastUpdated: "Season start — awaiting MRI"
   },
 
@@ -405,7 +405,7 @@ var CONFIG = {
   program: {
     1: {
       mon: {label:"Lower Strength + Core", note:"No shoulder loading in this phase, on purpose — the shoulder is under medical evaluation and this is about protecting it while building a real lower-body and core foundation. Dryland already happens Tuesday/Thursday, plus three lifting days, so this stays efficient and doesn't chase extra volume just to fill time. If anything causes shoulder pain, stop and tell your coach — don't test it.", exercises:[
-        {type:"sets", name:"Goblet Squat", sets:["8","8","8"], rest:"2 min", cue:"Controlled depth — form over load."},
+        {type:"sets", name:"Step-Ups", sets:["6/leg","6/leg","6/leg"], rest:"90 sec", cue:"Single-leg drive — real power for your starts and turns, no bar on your shoulders."},
         {type:"sets", name:"Bulgarian Split Squat", sets:["6/leg","6/leg"], rest:"90 sec", cue:"Don't chase fatigue — stable and controlled."},
         {type:"sets", name:"Hamstring Curl", sets:["8","8"], rest:"90 sec", cue:"Full range, controlled tempo."},
         {type:"sets", name:"Calf Raises", sets:["10","10"], rest:"75 sec", cue:"Full range, controlled."},
@@ -430,7 +430,7 @@ var CONFIG = {
     },
     2: {
       mon: {label:"Lower Strength + Core", note:"Upper-body work is intentionally paused — it only starts once your coach updates your Shoulder Clearance Status to Partially or Fully Cleared (see the Shoulder Status section). Until then, this stays lower-body and core: reps come down, loads go up, and that's real strength you're building while the shoulder heals.", exercises:[
-        {type:"sets", name:"Goblet Squat", sets:["6","6","6"], rest:"2 min", cue:"Heavier than Phase 1 — form over load, still."},
+        {type:"sets", name:"Step-Ups", sets:["5/leg","5/leg","5/leg"], rest:"90 sec", cue:"Heavier than Phase 1 — single-leg drive and control."},
         {type:"sets", name:"Bulgarian Split Squat", sets:["5/leg","5/leg"], rest:"90 sec", cue:"Stable and controlled."},
         {type:"sets", name:"Hamstring Curl", sets:["8","8"], rest:"90 sec", cue:"Full range, controlled tempo."},
         {type:"sets", name:"Calf Raises", sets:["8-10","8-10"], rest:"75 sec", cue:"Full range, controlled."},
@@ -455,7 +455,7 @@ var CONFIG = {
     },
     3: {
       mon: {label:"Lower Power + Core", note:"Converting lower-body strength into sprint power — starts, turns, underwaters. Contrast pairs here (heavy lift into an explosive jump) teach your legs to produce force fast. Upper-body power stays paused until your coach clears the shoulder and updates this phase.", exercises:[
-        {type:"contrast", name:"Goblet Squat &rarr; Box Jump", rounds:3, liftReps:"4", jumpReps:"3", restBetween:"20-30 sec", restRounds:"90-120 sec", cue:"Moderate load squat, then max-effort box jumps. Stop if jump quality drops."},
+        {type:"contrast", name:"Hip Thrust &rarr; Box Jump", rounds:3, liftReps:"4", jumpReps:"3", restBetween:"20-30 sec", restRounds:"90-120 sec", cue:"Explosive hip drive into a max-effort jump — this is the same hip-extension power behind a strong dolphin kick. Stop if jump quality drops."},
         {type:"sets", name:"Bulgarian Split Squat", sets:["4/leg","4/leg"], rest:"75 sec", cue:"Controlled, stable."},
         {type:"sets", name:"Hamstring Curl", sets:["6","6"], rest:"75 sec", cue:"Controlled."},
         {type:"sets", name:"Calf Raises", sets:["6-8","6-8"], rest:"60 sec", cue:"Full range."},
@@ -479,7 +479,7 @@ var CONFIG = {
     }
   },
 
-  progressLifts: ["Goblet Squat","Leg Press","Bulgarian Split Squat","Hip Thrust","Broad Jump"]
+  progressLifts: ["Step-Ups","Leg Press","Bulgarian Split Squat","Hip Thrust","Broad Jump"]
 };
 /* ========================= END COACH-EDITABLE SECTION ===================== */
 
@@ -972,7 +972,7 @@ var CONFIG = {
   };
 
   // ---------------- PROGRESS ----------------
-  var progLifts = ['Goblet Squat','Leg Press','Bulgarian Split Squat','Hip Thrust','Broad Jump'];
+  var progLifts = ['Step-Ups','Leg Press','Bulgarian Split Squat','Hip Thrust','Broad Jump'];
   function renderProgress(){
     var html = '';
     progLifts.forEach(function(name, i){
@@ -1072,8 +1072,9 @@ var CONFIG = {
       html += '<div class="card accent-red" style="margin-bottom:10px; cursor:pointer;" onclick="toggleHistoryDetail(\''+w.id+'\')">';
       html += '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">';
       html += '<h3>'+fmtShort(parseDate(w.workout_date))+' &mdash; '+(w.workout_label||w.workout_type)+'</h3>';
-      html += '<span class="tag red">Phase '+w.phase+'</span></div>';
+      html += (w.phase ? '<span class="tag red">Phase '+w.phase+'</span>' : '') + '</div>';
       html += '<p class="small" style="margin-top:4px;">'+feel+'</p>';
+      if (w.notes) html += '<p class="small" style="margin-top:6px; white-space:pre-wrap;">'+w.notes+'</p>';
       html += '<div id="hist-detail-'+w.id+'" style="display:none; margin-top:10px;"><p class="small">Loading sets\u2026</p></div>';
       html += '</div>';
     });
