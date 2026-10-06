@@ -376,12 +376,12 @@ var CONFIG = {
   // stay lower-body/core only — no upper-body exercises get added automatically.
   // ==========================================================================
   shoulderStatus: {
-    clearance: "not-cleared",
+    clearance: "partially-cleared",
     mriDate: "Scheduled for the first week of practice",
     medicalGuidance: "",
     ptGuidance: "",
     coachNotes: "No deadlift — hurts his back, keep excluded permanently. He also listed serratus punches as something he enjoys; sometimes used in shoulder PT, but not added yet pending confirmation with his medical/PT team.",
-    lastUpdated: "Season start — awaiting MRI"
+    lastUpdated: "Shoulder improving — upper-body work reintroduced conservatively"
   },
 
   // PT exercises go here once the packet is reviewed. Do not pre-fill with
@@ -552,12 +552,12 @@ var CONFIG = {
 };
 /* ========================= END COACH-EDITABLE SECTION ===================== */
 
-// Shoulder gate: Phase 2 and 3 are written for a fully cleared shoulder. Until
-// clearance is "fully-cleared", each day falls back to its lower-body version
+// Shoulder gate: Phase 2 and 3 are written for a cleared shoulder. Until
+// clearance is "partially-cleared" or "fully-cleared", each day falls back to its lower-body version
 // (stored as day.uncleared), which is exactly what the plan looked like before.
 (function applyShoulderGate(){
   var s = CONFIG.shoulderStatus || {};
-  if (s.clearance === 'fully-cleared') return;
+  if (s.clearance === 'fully-cleared' || s.clearance === 'partially-cleared') return;
   Object.keys(CONFIG.program).forEach(function(ph){
     ['mon','wed','fri'].forEach(function(d){
       var day = CONFIG.program[ph][d];
@@ -694,7 +694,7 @@ var CONFIG = {
     var summary = document.getElementById('shoulder-status-summary');
     if (summary){
       if (s.clearance === 'fully-cleared') summary.textContent = 'Cleared for upper-body training. Pressing and pulling are part of your program now, starting lighter and building as the shoulder responds.';
-      else if (s.clearance === 'partially-cleared') summary.textContent = 'MRI: ' + (s.mriDate || 'Not yet scheduled') + '. Upper-body work is being reintroduced gradually — your coaches will add the specific movements to your plan.';
+      else if (s.clearance === 'partially-cleared') summary.textContent = 'Upper-body work is back in your program, starting conservatively while your shoulder finishes clearing. Tell your coach right away if anything hurts or feels off.';
       else summary.textContent = 'MRI: ' + (s.mriDate || 'Not yet scheduled') + '. Lower-body training continues as normal — upper-body work stays paused until cleared.';
     }
 
