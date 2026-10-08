@@ -426,7 +426,7 @@ var CONFIG = {
     1: {
       mon: {label:"Lower + Pull", note:"Lower-body strength with pulling joining in. Rows and pulldowns rebuild the back and shoulder-blade strength your stroke relies on. Go lighter than you think for the first two weeks of pulling — the shoulder's tissue adapts slower than your muscles feel — then build. If anything pinches or hurts, stop and tell your coach.", exercises:[
         {type:"sets", name:"Step-Ups", sets:["6/leg","6/leg","6/leg"], rest:"90 sec", cue:"Single-leg drive — real power for your starts and turns, no bar on your shoulders."},
-        {type:"sets", name:"Bulgarian Split Squat", sets:["6/leg","6/leg"], rest:"90 sec", cue:"Don't chase fatigue — stable and controlled."},
+        {type:"sets", name:"Reverse Lunge", sets:["6/leg","6/leg"], rest:"75 sec", cue:"Controlled, stable knee position."},
         {type:"sets", name:"Leg Extension", sets:["10","10"], rest:"60 sec", cue:"Controlled — don't chase failure."},
         {type:"sets", name:"Hamstring Curl", sets:["8","8"], rest:"90 sec", cue:"Full range, controlled tempo."},
         {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["10","10","10"], rest:"90 sec", cue:"Wide grip, pull your elbows down toward your ribs, controlled return. Light for the first two weeks, then build."},
@@ -460,7 +460,7 @@ var CONFIG = {
         {type:"sets", name:"Broad Jumps", sets:["3","3"], rest:"90 sec", cue:"Horizontal power, full reset."},
         {type:"sets", name:"Hip Thrust", sets:["8","8"], rest:"90 sec", cue:"Powerful lockout, controlled eccentric."},
         {type:"sets", name:"Leg Press", sets:["8","8","8"], rest:"90 sec", cue:"Seated, hips stay on the pad. Stop lowering before your hips tuck or lift. Stay at the weight that feels good in your back (for you that's been around 4 plates) and add reps or a slower lowering phase before adding plates."},
-        {type:"sets", name:"Back Extension", sets:["8","8"], rest:"60 sec", cue:"Controlled — focus on hip extension."},
+        {type:"sets", name:"Back Extension", sets:["8","8"], rest:"60 sec", cue:"Bodyweight or light, controlled. Your hips do the work, no swinging. Stop if you feel pressure in your low back."},
         {type:"sets", name:"DB Bench Press", sets:["10","10","10"], rest:"90 sec", cue:"Light and controlled for the first two weeks. Stop short of any pinching or pain."},
         {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["10","10","10"], rest:"75 sec", cue:"Wide grip, pull your elbows down toward your ribs, controlled return."},
         {type:"sets", name:"Side Plank", sets:[":30/side",":30/side"], rest:"45 sec", cue:"Strong trunk, controlled position."}
@@ -475,7 +475,7 @@ var CONFIG = {
         ]}}
     },
     2: {
-      mon: {label:"Lower Strength + Pull", note:"Lower-body strength stays the anchor, with pulling alongside it. Rows and pulldowns build the back and shoulder-blade strength your stroke relies on. Add weight only when every rep looks clean.", exercises:[
+      mon: {label:"Lower Strength + Pull", note:"Lower-body strength stays the anchor, and the single-leg work gets harder: Bulgarian split squats replace lunges. Rows and pulldowns build the back and shoulder-blade strength your stroke relies on. Add weight only when every rep looks clean.", exercises:[
         {type:"sets", name:"Step-Ups", sets:["5/leg","5/leg","5/leg"], rest:"90 sec", cue:"Heavier than Phase 1 — single-leg drive and control."},
         {type:"sets", name:"Bulgarian Split Squat", sets:["5/leg","5/leg"], rest:"90 sec", cue:"Stable and controlled."},
         {type:"sets", name:"Leg Extension", sets:["8","8"], rest:"60 sec", cue:"Controlled — don't chase failure."},
@@ -491,11 +491,12 @@ var CONFIG = {
         {type:"sets", name:"Calf Raises", sets:["8-10","8-10"], rest:"75 sec", cue:"Full range, controlled."},
         {type:"sets", name:"Plank", sets:[":45-60",":45-60"], rest:"45 sec", cue:"Strong trunk position."}
         ]}},
-      wed: {label:"Upper + Core", note:"Heavier pressing and pulling, built on Phase 1. Add weight only when every rep looks clean and the shoulder feels normal during and after. Face Pulls and External Rotation stay in every phase: they're the shoulder-durability work that keeps a swimmer's shoulder healthy.", exercises:[
-        {type:"sets", name:"Incline Hammer Strength Chest Press", sets:["8","8","8"], rest:"90 sec", cue:"Control the lowering and use the stretch at the bottom, no bouncing. Stop short of any pinching or pain."},
+      wed: {label:"Upper + Core", note:"Heavier pressing and pulling, built on Phase 1, plus Serratus Punches for shoulder-blade control. Add weight only when every rep looks clean and the shoulder feels normal during and after. Face Pulls and External Rotation stay in every phase: they're the shoulder-durability work that keeps a swimmer's shoulder healthy.", exercises:[
+        {type:"sets", name:"Incline Hammer Strength Chest Press", sets:["8","8","8","8"], rest:"2 min", cue:"Control the lowering and use the stretch at the bottom, no bouncing. Stop short of any pinching or pain."},
         {type:"sets", name:"Single-Arm DB Row", sets:["8/side","8/side","8/side"], rest:"75 sec", cue:"Pull toward your hip and keep your torso still."},
         {type:"sets", name:"Face Pull", sets:["15","15","15"], rest:"60 sec", cue:"Light load, pull to your face, elbows high."},
         {type:"sets", name:"Shoulder External Rotation", sets:["12/side","12/side"], rest:"45 sec", cue:"Light band or cable, elbow tucked at your side. These small rotator cuff muscles stabilize your shoulder through every stroke."},
+        {type:"superset", name:"Serratus Punch + Prone Y-Raise Superset", rounds:2, rest:"45 sec after each round", cue:"Serratus punches into prone Y-raises, no rest between. Serratus: cable or band at chest height, punch forward and reach your shoulder blade around your ribcage. Y-raise: face down on an incline bench or the floor, thumbs up, light dumbbells or no weight, raise your arms into a Y and squeeze your shoulder blades down and back. About 12 reps each. This is control, not load: it builds the shoulder-blade strength behind a tight streamline off every start, turn and wall."},
         {type:"sets", name:"Tricep Pushdown", sets:["10","10","10"], rest:"60 sec", cue:"Elbows pinned, full extension."},
         {type:"sets", name:"Leg Raises", sets:["10-12","10-12"], rest:"45 sec", cue:"Slow — maintain trunk control."}
       ],
@@ -507,11 +508,11 @@ var CONFIG = {
         {type:"sets", name:"Box Jumps", sets:["3","3","3"], rest:"90 sec", cue:"Explosive, full reset between jumps."},
         {type:"sets", name:"Leg Raises", sets:["10-12","10-12"], rest:"45 sec", cue:"Slow — maintain trunk control."}
         ]}},
-      fri: {label:"Full Body + Power", note:"Lower-body power leads while you're fresh, then strength work, then the pressing and pulling that keep your upper body balanced. Back Extensions stay in because hip and low-back extension strength carries straight into your underwater dolphin kick.", exercises:[
-        {type:"sets", name:"Broad Jumps", sets:["3","3","3"], rest:"90 sec", cue:"Horizontal power, full reset."},
+      fri: {label:"Full Body + Power", note:"Your jumps move from horizontal to vertical: box jumps replace broad jumps. Lower-body power leads while you're fresh, then strength work, then the pressing and pulling that keep your upper body balanced. Back Extensions stay in because hip and low-back extension strength carries straight into your underwater dolphin kick.", exercises:[
+        {type:"sets", name:"Box Jumps", sets:["3","3","3"], rest:"90 sec", cue:"Explosive, full reset between jumps."},
         {type:"sets", name:"Hip Thrust", sets:["6","6","6"], rest:"90 sec", cue:"Powerful lockout, controlled eccentric."},
         {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Seated, hips stay on the pad. Stop lowering before your hips tuck or lift. Stay at the weight that feels good in your back (for you that's been around 4 plates) and add reps or a slower lowering phase before adding plates."},
-        {type:"sets", name:"Back Extension", sets:["8","8"], rest:"60 sec", cue:"Controlled — focus on hip extension."},
+        {type:"sets", name:"Back Extension", sets:["8","8"], rest:"60 sec", cue:"Bodyweight or light, controlled. Your hips do the work, no swinging. Stop if you feel pressure in your low back."},
         {type:"sets", name:"DB Bench Press", sets:["8","8","8"], rest:"90 sec", cue:"A different angle than Wednesday's incline press. Controlled, pain-free, add weight only when it's clean."},
         {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["10","10","10"], rest:"75 sec", cue:"Wide grip, pull your elbows down toward your ribs, controlled return."},
         {type:"sets", name:"Side Plank", sets:[":30-40/side",":30-40/side"], rest:"45 sec", cue:"Strong trunk, controlled position."}
@@ -546,6 +547,7 @@ var CONFIG = {
         {type:"sets", name:"Single-Arm DB Row", sets:["6/side","6/side","6/side"], rest:"75 sec", cue:"Powerful pull, controlled return."},
         {type:"sets", name:"Face Pull", sets:["15","15"], rest:"60 sec", cue:"Maintained every phase."},
         {type:"sets", name:"Shoulder External Rotation", sets:["10/side","10/side"], rest:"45 sec", cue:"Maintained every phase."},
+        {type:"superset", name:"Serratus Punch + Prone Y-Raise Superset", rounds:2, rest:"45 sec after each round", cue:"Same pairing as Phase 2, kept light and crisp: about 10 reps each. Streamline strength matters most on your starts, turns and underwaters."},
         {type:"sets", name:"Tricep Pushdown", sets:["8","8"], rest:"60 sec", cue:"Controlled."},
         {type:"sets", name:"Leg Raises", sets:["10","10"], rest:"45 sec", cue:"Slow — maintain trunk control."}
       ],
@@ -559,9 +561,9 @@ var CONFIG = {
       fri: {label:"Full Body Power", note:"Same explosive intent to close the week, then lower-volume strength work. Quality over quantity: this session is built to leave you fresh, not fried.", exercises:[
         {type:"contrast", name:"Leg Press &rarr; Broad Jump", rounds:3, liftReps:"4", jumpReps:"3", restBetween:"20-30 sec", restRounds:"90-120 sec", cue:"Moderate load leg press, then explosive broad jumps. Quality over quantity."},
         {type:"sets", name:"Incline Hammer Strength Chest Press", sets:["5","5","5"], rest:"90 sec", cue:"Fast on the press, controlled on the way down. Control the lowering and use the stretch at the bottom, no bouncing. Stop short of any pinching or pain."},
-        {type:"sets", name:"Chest-Supported Row", sets:["8","8"], rest:"75 sec", cue:"Controlled."},
+        {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["6","6"], rest:"90 sec", cue:"Wide grip, pull your elbows down toward your ribs. Fast pull, controlled return: lat power for your pull-through."},
         {type:"sets", name:"Leg Extension", sets:["6","6"], rest:"60 sec", cue:"Controlled."},
-        {type:"sets", name:"Back Extension", sets:["6-8","6-8"], rest:"60 sec", cue:"Controlled — focus on hip extension."},
+        {type:"sets", name:"Back Extension", sets:["6-8","6-8"], rest:"60 sec", cue:"Bodyweight or light, controlled. Your hips do the work, no swinging. Stop if you feel pressure in your low back."},
         {type:"sets", name:"Side Plank", sets:[":30-45/side",":30-45/side"], rest:"45 sec", cue:"Strong trunk, controlled position."}
       ],
         uncleared:{label:"Athletic + Stability", note:"Same explosive intent to close the week. Once cleared, this is where upper-body power (med-ball work, pressing, pulling) gets added according to your medical/PT guidance — not before, and not because you feel ready to test it yourself.", exercises:[
