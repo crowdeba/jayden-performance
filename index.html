@@ -94,6 +94,8 @@
   .flag-ex-btn.flagged{background:var(--red); border-color:var(--red); color:#fff;}
   .ex-sr{font-weight:800; color:var(--red-deep); font-size:13px; white-space:nowrap; text-align:right;}
   .ex-cue{font-size:11.5px; color:var(--slate); margin:5px 0 10px;}
+  .taper-target{font-size:12.5px; font-weight:600; color:var(--amber); background:rgba(181,121,10,0.10); border-radius:8px; padding:8px 10px; margin:0 0 10px;}
+  .taper-target.ask{color:var(--red-deep); background:rgba(142,11,33,0.08);}
   .ex-last{font-size:11.5px; margin-bottom:8px;}
   .ex-last input{max-width:220px; display:inline-block;}
   .set-row{display:grid; grid-template-columns:60px 1fr 1fr 34px; gap:8px; align-items:center; margin-bottom:6px;}
@@ -204,6 +206,7 @@
       <button class="today-btn" onclick="goToToday()">Today's Workout &rarr;</button>
       <div class="week-row" id="home-week"></div>
     </div>
+    <div class="card accent-red" id="home-meet-week" style="display:none; margin-top:14px;"></div>
     <div class="card accent-red">
       <h3>Upcoming Meet</h3>
       <div id="home-next-meet" class="small" style="margin-top:6px;"></div>
@@ -411,9 +414,94 @@ var CONFIG = {
     {start:"2026-12-08", end:"2026-12-10", label:"Taper: Midseason Meet"}
   ],
 
+  // A "modified" entry that has a plan{} shows that exact reduced workout, with weight targets worked out
+  // from the athlete's own logged weights. primerOn:true on a no-lift entry swaps in its primerPlan instead.
   liftOverrides: [
-    {start:"2026-10-23", end:"2026-10-23", mode:"no-lift", label:"No Lift — WTRC Meet"},
-    {start:"2026-11-06", end:"2026-11-06", mode:"no-lift", label:"No Lift — Fort Wayne Invite"},
+    {start:"2026-11-04", end:"2026-11-04", mode:"modified", label:"Meet-Week Lift — Fort Wayne Invite",
+      plan:{
+        "chip": "Meet-Week Lift",
+        "title": "Meet-Week Lift",
+        "intro": "Racing is close, so today's lift is about half the normal sets. Keep the weight close to normal (your targets are on each exercise), stop every set with 3 or more reps left, and move the bar fast and crisp. The goal is to feel sharp for racing, not worked.",
+        "dropped": [
+          "Serratus Punch + Prone Y-Raise Superset",
+          "Leg Raises"
+        ],
+        "homeNote": "about half the normal sets at near-normal weight. Open it that day to see your exact weights.",
+        "exercises": [
+          {
+            "name": "Incline Hammer Strength Chest Press",
+            "sets": 3,
+            "loadPct": 85
+          },
+          {
+            "name": "Single-Arm DB Row",
+            "sets": 2,
+            "loadPct": 85
+          },
+          {
+            "name": "Face Pull",
+            "sets": 2,
+            "loadPct": 100
+          },
+          {
+            "name": "Shoulder External Rotation",
+            "sets": 2,
+            "loadPct": 100
+          },
+          {
+            "name": "Tricep Pushdown",
+            "sets": 2,
+            "loadPct": 90
+          }
+        ]
+      }},
+    // Friday before racing: the default is NO LIFT. To offer the short primer instead, change primerOn to true.
+    {start:"2026-11-06", end:"2026-11-06", mode:"no-lift", label:"No Lift — Fort Wayne Invite",
+      primerOn:false,
+      primerLabel:"Optional Primer — Fort Wayne Invite",
+      primerPlan:{
+        "chip": "Primer",
+        "title": "Optional Primer",
+        "intro": "A short, light, fast activation, about 20 minutes. Nothing here should make you sore or tired. Do it in the morning, only if your coach said go, and skip it if you feel flat or beat up.",
+        "dropped": [],
+        "homeNote": "optional 20-minute primer, only if your coach says go.",
+        "exercises": [
+          {
+            "name": "Box Jumps",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "noTarget": true,
+            "hint": "Use a lower box or smaller jumps than usual, full reset every rep. Quality only.",
+            "cue": "Fast and crisp. Stop at 2 sets."
+          },
+          {
+            "name": "Hip Thrust",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "loadPct": 60,
+            "cue": "Light and fast. Drive up quickly and stop with plenty left."
+          },
+          {
+            "name": "Incline Hammer Strength Chest Press",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "loadPct": 60,
+            "cue": "Light and fast. Drive up quickly and stop with plenty left."
+          }
+        ]
+      }},
     {start:"2026-11-13", end:"2026-11-13", mode:"no-lift", label:"No Lift — Mason Meet"},
     {start:"2026-12-11", end:"2026-12-11", mode:"no-lift", label:"No Lift — Midseason Meet"},
     {start:"2027-03-05", end:"2027-03-05", mode:"no-lift", label:"No Lift — Senior Champs"}
@@ -476,24 +564,24 @@ var CONFIG = {
     },
     2: {
       mon: {label:"Lower Strength + Pull", note:"Lower-body strength stays the anchor, and the single-leg work gets harder: Bulgarian split squats replace lunges. Rows and pulldowns build the back and shoulder-blade strength your stroke relies on. Add weight only when every rep looks clean.", exercises:[
-        {type:"sets", name:"Step-Ups", sets:["5/leg","5/leg","5/leg"], rest:"90 sec", cue:"Heavier than Phase 1 — single-leg drive and control."},
-        {type:"sets", name:"Bulgarian Split Squat", sets:["5/leg","5/leg"], rest:"90 sec", cue:"Stable and controlled."},
+        {type:"sets", name:"Step-Ups", sets:["5/leg","5/leg","5/leg"], rest:"2 min", cue:"Heavier than Phase 1 — single-leg drive and control."},
+        {type:"sets", name:"Bulgarian Split Squat", sets:["5/leg","5/leg"], rest:"2 min", cue:"Stable and controlled. Drive it up with intent, lower under control."},
         {type:"sets", name:"Leg Extension", sets:["8","8"], rest:"60 sec", cue:"Controlled — don't chase failure."},
         {type:"sets", name:"Hamstring Curl", sets:["8","8"], rest:"90 sec", cue:"Full range, controlled tempo."},
-        {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["8","8","8"], rest:"90 sec", cue:"Wide grip, pull your elbows down toward your ribs, controlled return."},
-        {type:"sets", name:"Chest-Supported Row", sets:["8","8","8"], rest:"75 sec", cue:"Squeeze your shoulder blades together at the top. The chest support keeps your low back out of it."},
+        {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["8","8","8"], rest:"2 min", cue:"Wide grip, pull your elbows down toward your ribs, controlled return. Drive it up with intent, lower under control."},
+        {type:"sets", name:"Chest-Supported Row", sets:["8","8","8"], rest:"2 min", cue:"Squeeze your shoulder blades together at the top. The chest support keeps your low back out of it. Drive it up with intent, lower under control."},
         {type:"sets", name:"Plank", sets:[":45-60",":45-60"], rest:"45 sec", cue:"Strong trunk position."}
       ],
         uncleared:{label:"Lower Strength + Core", note:"Upper-body work is intentionally paused — it only starts once your coach updates your Shoulder Clearance Status (see the Shoulder Status section). Until then, this stays lower-body and core: reps come down, loads go up, and that's real strength you're building while the shoulder heals.", exercises:[
-        {type:"sets", name:"Step-Ups", sets:["5/leg","5/leg","5/leg"], rest:"90 sec", cue:"Heavier than Phase 1 — single-leg drive and control."},
-        {type:"sets", name:"Bulgarian Split Squat", sets:["5/leg","5/leg"], rest:"90 sec", cue:"Stable and controlled."},
+        {type:"sets", name:"Step-Ups", sets:["5/leg","5/leg","5/leg"], rest:"2 min", cue:"Heavier than Phase 1 — single-leg drive and control."},
+        {type:"sets", name:"Bulgarian Split Squat", sets:["5/leg","5/leg"], rest:"2 min", cue:"Stable and controlled. Drive it up with intent, lower under control."},
         {type:"sets", name:"Hamstring Curl", sets:["8","8"], rest:"90 sec", cue:"Full range, controlled tempo."},
         {type:"sets", name:"Calf Raises", sets:["8-10","8-10"], rest:"75 sec", cue:"Full range, controlled."},
         {type:"sets", name:"Plank", sets:[":45-60",":45-60"], rest:"45 sec", cue:"Strong trunk position."}
         ]}},
       wed: {label:"Upper + Core", note:"Heavier pressing and pulling, built on Phase 1, plus Serratus Punches for shoulder-blade control. Add weight only when every rep looks clean and the shoulder feels normal during and after. Face Pulls and External Rotation stay in every phase: they're the shoulder-durability work that keeps a swimmer's shoulder healthy.", exercises:[
-        {type:"sets", name:"Incline Hammer Strength Chest Press", sets:["8","8","8","8"], rest:"2 min", cue:"Control the lowering and use the stretch at the bottom, no bouncing. Stop short of any pinching or pain."},
-        {type:"sets", name:"Single-Arm DB Row", sets:["8/side","8/side","8/side"], rest:"75 sec", cue:"Pull toward your hip and keep your torso still."},
+        {type:"sets", name:"Incline Hammer Strength Chest Press", sets:["8","8","8","8"], rest:"2 min", cue:"Control the lowering and use the stretch at the bottom, no bouncing. Stop short of any pinching or pain. Drive it up with intent, lower under control."},
+        {type:"sets", name:"Single-Arm DB Row", sets:["8/side","8/side","8/side"], rest:"2 min", cue:"Pull toward your hip and keep your torso still. Drive it up with intent, lower under control."},
         {type:"sets", name:"Face Pull", sets:["15","15","15"], rest:"60 sec", cue:"Light load, pull to your face, elbows high."},
         {type:"sets", name:"Shoulder External Rotation", sets:["12/side","12/side"], rest:"45 sec", cue:"Light band or cable, elbow tucked at your side. These small rotator cuff muscles stabilize your shoulder through every stroke."},
         {type:"superset", name:"Serratus Punch + Prone Y-Raise Superset", rounds:2, rest:"45 sec after each round", cue:"Serratus punches into prone Y-raises, no rest between. Serratus: cable or band at chest height, punch forward and reach your shoulder blade around your ribcage. Y-raise: face down on an incline bench or the floor, thumbs up, light dumbbells or no weight, raise your arms into a Y and squeeze your shoulder blades down and back. About 12 reps each. This is control, not load: it builds the shoulder-blade strength behind a tight streamline off every start, turn and wall."},
@@ -501,8 +589,8 @@ var CONFIG = {
         {type:"sets", name:"Leg Raises", sets:["10-12","10-12"], rest:"45 sec", cue:"Slow — maintain trunk control."}
       ],
         uncleared:{label:"Lower + Athletic", note:"Same rule as Monday — lower-body and core only, progressing in load, until clearance changes what this day looks like.", exercises:[
-        {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Heavier, controlled reps."},
-        {type:"sets", name:"Hip Thrust", sets:["6","6","6"], rest:"90 sec", cue:"Powerful lockout, controlled eccentric."},
+        {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Heavier, controlled reps. Drive it up with intent, lower under control."},
+        {type:"sets", name:"Hip Thrust", sets:["6","6","6"], rest:"2 min", cue:"Powerful lockout, controlled eccentric."},
         {type:"sets", name:"Leg Extension", sets:["8","8"], rest:"60 sec", cue:"Controlled — don't chase failure."},
         {type:"sets", name:"Hip Abductor", sets:["8-10","8-10"], rest:"45 sec", cue:"Moderate weight, controlled."},
         {type:"sets", name:"Box Jumps", sets:["3","3","3"], rest:"90 sec", cue:"Explosive, full reset between jumps."},
@@ -510,15 +598,15 @@ var CONFIG = {
         ]}},
       fri: {label:"Full Body + Power", note:"Your jumps move from horizontal to vertical: box jumps replace broad jumps. Lower-body power leads while you're fresh, then strength work, then the pressing and pulling that keep your upper body balanced. Back Extensions stay in because hip and low-back extension strength carries straight into your underwater dolphin kick.", exercises:[
         {type:"sets", name:"Box Jumps", sets:["3","3","3"], rest:"90 sec", cue:"Explosive, full reset between jumps."},
-        {type:"sets", name:"Hip Thrust", sets:["6","6","6"], rest:"90 sec", cue:"Powerful lockout, controlled eccentric."},
-        {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Seated, hips stay on the pad. Stop lowering before your hips tuck or lift. Stay at the weight that feels good in your back (for you that's been around 4 plates) and add reps or a slower lowering phase before adding plates."},
+        {type:"sets", name:"Hip Thrust", sets:["6","6","6"], rest:"2 min", cue:"Powerful lockout, controlled eccentric."},
+        {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Seated, hips stay on the pad. Stop lowering before your hips tuck or lift. Stay at the weight that feels good in your back (for you that's been around 4 plates) and add reps or a slower lowering phase before adding plates. Drive it up with intent, lower under control."},
         {type:"sets", name:"Back Extension", sets:["8","8"], rest:"60 sec", cue:"Bodyweight or light, controlled. Your hips do the work, no swinging. Stop if you feel pressure in your low back."},
-        {type:"sets", name:"DB Bench Press", sets:["8","8","8"], rest:"90 sec", cue:"A different angle than Wednesday's incline press. Controlled, pain-free, add weight only when it's clean."},
-        {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["10","10","10"], rest:"75 sec", cue:"Wide grip, pull your elbows down toward your ribs, controlled return."},
+        {type:"sets", name:"DB Bench Press", sets:["8","8","8"], rest:"2 min", cue:"A different angle than Wednesday's incline press. Controlled, pain-free, add weight only when it's clean. Drive it up with intent, lower under control."},
+        {type:"sets", name:"Wide-Grip Lat Pulldown", sets:["10","10","10"], rest:"2 min", cue:"Wide grip, pull your elbows down toward your ribs, controlled return. Drive it up with intent, lower under control."},
         {type:"sets", name:"Side Plank", sets:[":30-40/side",":30-40/side"], rest:"45 sec", cue:"Strong trunk, controlled position."}
       ],
         uncleared:{label:"Athletic + Stability", note:"Still lower-body and stability focused. Once cleared, this is where controlled pulling and pressing will eventually get layered in, according to medical/PT guidance — not before.", exercises:[
-        {type:"sets", name:"Reverse Lunge", sets:["5/leg","5/leg"], rest:"75 sec", cue:"Controlled, stable knee position."},
+        {type:"sets", name:"Reverse Lunge", sets:["5/leg","5/leg"], rest:"2 min", cue:"Controlled, stable knee position. Drive it up with intent, lower under control."},
         {type:"sets", name:"Single-Leg Balance Reach", sets:["6/leg","6/leg"], rest:"60 sec", cue:"Balance, stability, body awareness."},
         {type:"sets", name:"Back Extension", sets:["8","8"], rest:"60 sec", cue:"Controlled — focus on hip extension."},
         {type:"sets", name:"Seated Calf Raise", sets:["10","10"], rest:"60 sec", cue:"Full range, controlled."},
@@ -580,6 +668,16 @@ var CONFIG = {
   progressLifts: ["Step-Ups","Leg Press","Hip Thrust","Incline Hammer Strength Chest Press","Wide-Grip Lat Pulldown"]
 };
 /* ========================= END COACH-EDITABLE SECTION ===================== */
+
+(function applyPrimerChoice(){
+  (CONFIG.liftOverrides || []).forEach(function(o){
+    if (o.primerPlan && o.primerOn){
+      o.mode = 'modified';
+      o.plan = o.primerPlan;
+      if (o.primerLabel) o.label = o.primerLabel;
+    }
+  });
+})();
 
 // Shoulder gate: the program is written for a cleared shoulder. Until clearance is
 // "partially-cleared" or "fully-cleared", each day falls back to its lower-body version
@@ -656,7 +754,21 @@ var CONFIG = {
   function parseDate(s){ var p=s.split('-'); return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2])); }
   function sameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
   function inRange(d,s,e){ return d>=parseDate(s) && d<=parseDate(e); }
-  function todayMid(){ var d=new Date(); return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+  // Coach-only preview: open the page with ?preview=YYYY-MM-DD and sign in as coach to see it as that day.
+  var previewParam = (function(){ try { var m = (window.location.search || '').match(/[?&]preview=(\d{4}-\d{2}-\d{2})/); return m ? m[1] : null; } catch(e){ return null; } })();
+  function previewActive(){ return !!(previewParam && auth && auth.role === 'coach'); }
+  function showPreviewBanner(){
+    if (document.getElementById('preview-banner')) return;
+    var b = document.createElement('div');
+    b.id = 'preview-banner';
+    b.style.cssText = 'background:#B5790A; color:#fff; text-align:center; font-size:12.5px; font-weight:700; padding:8px 10px;';
+    b.textContent = 'PREVIEW (coach only): showing this page as it will look on ' + fmtLong(parseDate(previewParam)) + '. Nothing here saves.';
+    document.body.insertBefore(b, document.body.firstChild);
+  }
+  function todayMid(){
+    if (previewActive()) return parseDate(previewParam);
+    var d=new Date(); return new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  }
   function fmtLong(d){ return d.toLocaleDateString('en-US',{weekday:'long', month:'long', day:'numeric'}); }
   function fmtShort(d){ return d.toLocaleDateString('en-US',{month:'short', day:'numeric'}); }
 
@@ -677,6 +789,126 @@ var CONFIG = {
     for (var i=0;i<CONFIG.liftOverrides.length;i++){ if (inRange(d, CONFIG.liftOverrides[i].start, CONFIG.liftOverrides[i].end)) return CONFIG.liftOverrides[i]; }
     return null;
   }
+
+  // ---------------- MEET-WEEK PLANS ----------------
+  function getPlanOverride(d){
+    var ov = getLiftOverride(d);
+    return (ov && ov.mode==='modified' && ov.plan) ? ov : null;
+  }
+  function isPlanDateIso(iso){ return !!getPlanOverride(parseDate(iso)); }
+  function activePlanOverride(){
+    var today = todayMid(), block = getPhaseBlock(today), wd = today.getDay();
+    if (block && block.phase===state.workoutPhase && DAY_KEYS[wd]===state.workoutDay) return getPlanOverride(today);
+    return null;
+  }
+  function buildPlanExercises(day, ov){
+    var out = [];
+    ((ov && ov.plan && ov.plan.exercises) || []).forEach(function(item){
+      var base = null;
+      ((day && day.exercises) || []).forEach(function(e){ if (e.name===item.name) base = e; });
+      if (item.type === 'pullup'){
+        out.push({ type:'pullup', name:item.name, sets:item.sets, rest:(item.rest || (base && base.rest) || '2 min'),
+                   cue:(item.cue || 'Stop every set with 3 or more reps left. Fast, crisp reps.'),
+                   _pct:0, _noTarget:true, _hint:(item.hint || 'Use the same assistance as normal. Stop with 3 or more reps left.') });
+        return;
+      }
+      var reps = item.reps || ((base && Array.isArray(base.sets)) ? base.sets.slice() : []);
+      if (typeof reps === 'string') reps = [reps];
+      reps = reps.slice(0, item.sets);
+      while (reps.length < item.sets) reps.push(reps.length ? reps[reps.length-1] : '5');
+      out.push({
+        type:'sets', name:item.name, sets:reps,
+        rest: item.rest || (base && base.rest) || '2 min',
+        cue: item.cue || (base && base.cue) || 'Stop every set with 3 or more reps left. Fast, crisp reps.',
+        noWeight: !!(base && base.noWeight),
+        _pct: item.loadPct, _noTarget: !!item.noTarget, _hint: item.hint || ''
+      });
+    });
+    return out;
+  }
+  function parseWeightNum(w){
+    if (w === null || w === undefined) return NaN;
+    var s = String(w);
+    if (/body|bw/i.test(s)) return NaN;
+    var m = s.match(/\d+(\.\d+)?/);
+    return m ? parseFloat(m[0]) : NaN;
+  }
+  function roundTaperWeight(x){
+    return x >= 25 ? Math.round(x/5)*5 : Math.round(x/2.5)*2.5;
+  }
+  // sessions = top working weight per recent session, newest first.
+  function taperBase(sessions){
+    var s = sessions.slice(0,3);
+    if (!s.length) return {status:'none'};
+    if (s.length === 1) return {status:'ok', base:s[0], list:s};
+    for (var i=0;i<s.length-1;i++){
+      var hi = Math.max(s[i], s[i+1]), lo = Math.min(s[i], s[i+1]);
+      if (lo <= 0 || hi/lo > 1.3) return {status:'inconsistent', list:s};
+    }
+    return {status:'ok', base:s[0], list:s};
+  }
+  function renderTaperIntro(ov){
+    var p = ov.plan;
+    var h = '<div class="card accent-red"><h3>' + (p.title || 'Meet-Week Lift') + '</h3>';
+    h += '<p class="small" style="margin-top:6px;">' + p.intro + '</p>';
+    if (p.dropped && p.dropped.length) h += '<p class="small" style="margin-top:6px;"><strong>Skipping this week:</strong> ' + p.dropped.join(', ') + '.</p>';
+    h += '</div>';
+    return h;
+  }
+  function renderTaperExercise(ex, idx){
+    var h = (ex.type === 'pullup' && typeof renderPullupExercise === 'function') ? renderPullupExercise(ex) : renderSetsExercise(ex, idx);
+    var t;
+    if (ex._noTarget || !(ex._pct > 0)) t = '<div class="taper-target">' + (ex._hint || 'Same as normal, or a little lighter.') + '</div>';
+    else t = '<div class="taper-target" data-taper-name="' + ex.name.replace(/"/g,'&quot;') + '" data-taper-pct="' + ex._pct + '">Working out your target&hellip;</div>';
+    return h.replace('<div class="ex-last">', t + '<div class="ex-last">');
+  }
+  async function loadTaperTargets(){
+    var els = document.querySelectorAll('#workout-content .taper-target[data-taper-name]');
+    if (!els.length) return;
+    function askAll(){ els.forEach(function(el){ el.className = 'taper-target ask'; el.textContent = "Ask your coach for today's weights."; }); }
+    try {
+      var scopedId = await resolveSiteAthleteId();
+      if (!scopedId){ askAll(); return; }
+      var wres = await sb.from('workouts').select('id,workout_date')
+        .eq('athlete_id', scopedId).eq('completed', true).lt('workout_date', todayIso())
+        .order('workout_date', {ascending:false}).limit(40);
+      var rows = ((wres && wres.data) || []).filter(function(w){ return !isPlanDateIso(w.workout_date); });
+      var order = rows.map(function(w){ return w.id; });
+      var names = [];
+      els.forEach(function(el){ names.push(el.getAttribute('data-taper-name')); });
+      var sets = [];
+      if (order.length){
+        var sres = await sb.from('workout_sets').select('workout_id,exercise,weight').in('workout_id', order).in('exercise', names);
+        sets = (sres && sres.data) || [];
+      }
+      els.forEach(function(el){
+        var name = el.getAttribute('data-taper-name');
+        var pct = parseFloat(el.getAttribute('data-taper-pct'));
+        var perWorkout = {};
+        sets.forEach(function(s){
+          if (s.exercise !== name) return;
+          var n = parseWeightNum(s.weight);
+          if (!(n > 0)) return;
+          if (!perWorkout[s.workout_id] || n > perWorkout[s.workout_id]) perWorkout[s.workout_id] = n;
+        });
+        var sessions = [];
+        order.forEach(function(id){ if (perWorkout[id]) sessions.push(perWorkout[id]); });
+        var res = taperBase(sessions);
+        if (res.status === 'none'){
+          el.className = 'taper-target ask';
+          el.textContent = 'No logged weight yet for this one. Start light and ask your coach.';
+        } else if (res.status === 'inconsistent'){
+          el.className = 'taper-target ask';
+          el.textContent = "Ask your coach for today's weight. Your last logs don't line up: " + res.list.join(', ') + '.';
+        } else {
+          var target = roundTaperWeight(res.base * pct / 100);
+          el.className = 'taper-target';
+          el.innerHTML = 'Target: about <strong>' + target + ' lb</strong> ' + (pct >= 100 ? '(your normal weight)' : '(' + pct + '% of your last ' + res.base + ')');
+        }
+      });
+    } catch(e){ askAll(); }
+  }
+
   function isLiftDate(d){
     var wd = d.getDay();
     return (wd===1||wd===3||wd===5) && inRange(d, CONFIG.seasonStart, CONFIG.seasonEnd);
@@ -887,11 +1119,29 @@ var CONFIG = {
       var ov = isLiftDate(d) ? getLiftOverride(d) : null;
       var focus, style = '';
       if (ov && ov.mode==='no-lift'){ focus = 'No Lift'; style=' style="opacity:0.6;"'; }
-      else if (ov && ov.mode==='modified'){ focus = 'Modified'; }
+      else if (ov && ov.mode==='modified'){ focus = (ov.plan && ov.plan.chip) ? ov.plan.chip : 'Modified'; }
       else { focus = (CONFIG.program[phaseForChip] && CONFIG.program[phaseForChip][key]) ? CONFIG.program[phaseForChip][key].label : ''; }
       weekHtml += '<div class="week-chip"'+style+' onclick="selectPhase('+phaseForChip+');selectDay(\''+key+'\');showView(\'workouts\')"><div class="d">'+label+'</div><div class="f">'+focus+'</div></div>';
     });
     document.getElementById('home-week').innerHTML = weekHtml;
+
+    var mwLines = [], mwHasPlan = false;
+    [0,2,4].forEach(function(offset){
+      var d = addDays(thisMonday, offset);
+      if (!isLiftDate(d)) return;
+      var ov = getLiftOverride(d);
+      var nm = DAY_NAMES[DAY_KEYS[d.getDay()]];
+      if (ov && ov.mode==='modified' && ov.plan){ mwHasPlan = true; mwLines.push('<strong>'+nm+':</strong> '+ov.plan.title+' &mdash; '+(ov.plan.homeNote || 'a lighter lift. Open it that day.')); }
+      else if (ov && ov.mode==='no-lift') mwLines.push('<strong>'+nm+':</strong> '+ov.label);
+      else mwLines.push('<strong>'+nm+':</strong> normal lift');
+    });
+    var mwEl = document.getElementById('home-meet-week');
+    if (mwEl){
+      if (mwHasPlan){
+        mwEl.innerHTML = '<h3>Meet Week</h3>' + mwLines.map(function(x){ return '<p class="small" style="margin-top:6px;">'+x+'</p>'; }).join('');
+        mwEl.style.display = 'block';
+      } else { mwEl.style.display = 'none'; mwEl.innerHTML = ''; }
+    }
 
     var nm = nextMeet(today);
     document.getElementById('home-next-meet').innerHTML = nm
@@ -1040,6 +1290,7 @@ var CONFIG = {
   var autosavePending = false;
 
   async function autosaveNow(){
+    if (previewActive()) return;
     if (!auth.athleteId) return;
     if (autosaveInFlight){ autosavePending = true; return; }
     autosaveInFlight = true;
@@ -1127,9 +1378,12 @@ var CONFIG = {
     var res = await sb.from('workouts').select('id,workout_date')
       .eq('athlete_id', scopedId).eq('workout_type', state.workoutDay)
       .eq('completed', true).lt('workout_date', iso)
-      .order('workout_date', {ascending:false}).limit(1);
+      .order('workout_date', {ascending:false}).limit(4);
     if (res.error || !res.data || !res.data.length) return;
-    var priorWorkoutId = res.data[0].id;
+    var pickRow = null;
+    res.data.forEach(function(r){ if (!pickRow && !isPlanDateIso(r.workout_date)) pickRow = r; });
+    if (!pickRow) return;
+    var priorWorkoutId = pickRow.id;
     var setsRes = await sb.from('workout_sets').select('exercise,set_number,reps,weight,assistance')
       .eq('workout_id', priorWorkoutId).order('set_number');
     if (setsRes.error || !setsRes.data) return;
@@ -1170,12 +1424,13 @@ var CONFIG = {
       return block && block.phase===state.workoutPhase && DAY_KEYS[wd]===state.workoutDay;
     })();
     var todayOverride = isToday ? getLiftOverride(today) : null;
+    var planOv = (todayOverride && todayOverride.mode==='modified' && todayOverride.plan) ? todayOverride : null;
 
     var html = '<div class="card accent-red">';
     html += '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">';
     html += '<h3>Phase '+state.workoutPhase+' &middot; '+DAY_NAMES[state.workoutDay]+' &mdash; '+day.label+'</h3>';
     if (todayOverride && todayOverride.mode==='no-lift') html += '<span class="tag charcoal">No Lift Today</span>';
-    else if (todayOverride && todayOverride.mode==='modified') html += '<span class="tag amber">Modified Workout</span>';
+    else if (todayOverride && todayOverride.mode==='modified') html += '<span class="tag amber">'+(planOv ? (planOv.plan.chip || 'Meet-Week Lift') : 'Modified Workout')+'</span>';
     else if (isToday && meet) html += '<span class="tag amber">Meet Week: '+meet.label+' &mdash; lighten the load</span>';
     else if (isToday && taper) html += '<span class="tag blue">Taper Week &mdash; keep it light</span>';
     html += '</div>';
@@ -1191,6 +1446,9 @@ var CONFIG = {
 
     if (todayOverride && todayOverride.mode==='no-lift'){
       html += '<div class="card accent-charcoal"><h3>No Lift Today</h3><p class="small" style="margin-top:6px;">'+todayOverride.label+'. No gym today &mdash; rest, or focus on swim/dryland instead.</p></div>';
+    } else if (planOv){
+      html += renderTaperIntro(planOv);
+      buildPlanExercises(day, planOv).forEach(function(ex, idx){ html += renderTaperExercise(ex, idx); });
     } else if (todayOverride && todayOverride.mode==='modified'){
       html += '<div class="card accent-red"><h3>Modified Workout</h3><p class="small" style="margin-top:6px;">'+todayOverride.label+'. The normal Phase '+state.workoutPhase+' workout is on hold this week &mdash; check with your coach for what to do today.</p></div>';
     } else {
@@ -1217,6 +1475,7 @@ var CONFIG = {
     attachAutosaveListeners();
     restoreAutosavedInputs();
     renderLastTimeData();
+    if (planOv) loadTaperTargets();
   }
 
   window.toggleComplete = function(){
@@ -1234,6 +1493,8 @@ var CONFIG = {
   function computeExerciseCounts(){
     var dayObj = CONFIG.program[state.workoutPhase] && CONFIG.program[state.workoutPhase][state.workoutDay];
     var exercises = (dayObj && dayObj.exercises) || [];
+    var planO = activePlanOverride();
+    if (planO) exercises = buildPlanExercises(dayObj, planO);
     var planned = 0, completed = 0;
     exercises.forEach(function(ex){
       var cue = (ex.cue || '').toLowerCase();
@@ -1282,6 +1543,7 @@ var CONFIG = {
   }
 
   async function saveWorkoutToSupabase(feel){
+    if (previewActive()) return;
     var status = document.getElementById('feel-status');
     if (!auth.athleteId){
       if (status) status.textContent += ' (Signed in as coach — not saved as a logged workout.)';
@@ -1396,12 +1658,16 @@ var CONFIG = {
     html += '<p class="small" style="margin-top:6px;"><strong>Phase:</strong> '+(pb ? pb.label : 'Not in season') + '</p>';
     var liftText;
     if (!lift) liftText = 'No — not a lift day';
-    else if (override && override.mode==='no-lift') liftText = 'No Lift — ' + override.label;
-    else if (override && override.mode==='modified') liftText = 'Modified Workout — ' + override.label;
+    else if (override && override.mode==='no-lift') liftText = (/^No Lift/i.test(override.label) ? override.label : 'No Lift — ' + override.label);
+    else if (override && override.mode==='modified') liftText = (override.plan ? override.label : 'Modified Workout — ' + override.label);
     else liftText = 'Yes — ' + (pb ? 'Phase '+pb.phase : '');
     html += '<p class="small"><strong>Lifting:</strong> '+liftText+'</p>';
+    if (override && override.plan){
+      var pl = override.plan;
+      html += '<p class="small"><strong>Plan:</strong> ' + pl.exercises.map(function(e){ return e.name + ' (' + e.sets + ' sets)'; }).join(', ') + '.' + ((pl.dropped && pl.dropped.length) ? ' Skipping: ' + pl.dropped.join(', ') + '.' : '') + ' Your weight targets show up on the day.</p>';
+    }
     if (meet) html += '<p class="small"><strong>Meet:</strong> '+meet.label+'</p>';
-    if (taper) html += '<p class="small"><strong>Taper:</strong> '+taper.label+' — keep lifting light</p>';
+    if (taper) html += '<p class="small"><strong>Taper:</strong> '+taper.label.replace(/^Taper:\s*/,'')+(override && override.plan ? ' &mdash; see the lift plan above' : ' &mdash; keep lifting light')+'</p>';
     if (!meet && !taper && !override) html += '<p class="small">Normal training day.</p>';
     document.getElementById('cal-detail').innerHTML = html;
   };
@@ -1691,6 +1957,7 @@ var CONFIG = {
   }
 
   function initDashboard(){
+    if (previewActive()) showPreviewBanner();
     renderHome();
     backfillExerciseCounts();
     var todayBlock = getPhaseBlock(todayMid());
